@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>国旗当てゲーム</title>
+</head>
+<body>
+	<h1>★・・国旗当てゲーム・・★</h1>
+	<form action="/answer" method="post">
+		<img src="${flag.image}">
+		
+		<p>
+			<button type="submit" name="number" value="${flag.choice1}"></button>
+		</p>
+		<p>
+			<button type="submit" name="number" value="${flag.choice2}"></button>
+		</p>
+		<p>
+			<button type="submit" name="number" onclick="location.href='/answer'" value="3">
+				<span th:text="${flag.choice3}"></span></button>
+		</p>
+		<p>
+			<button type="submit" name="number" href="/answer/4"
+			 th:text="${flag.choice4}"></button>
+		</p>
+		
+	</form>
+	<hr>
+	
+	<p>
+		<h2 th:text="comment"></h2>
+		<h2><span th:text="${comment}"></span></h2>
+	</p>
+	
+	<p>
+		<a href="/game">☆・・次の問題・・☆</a>
+	</p>
+
+</body>
+</html>
