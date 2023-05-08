@@ -1,4 +1,5 @@
 package com.example.demo.controller;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -6,8 +7,10 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.example.demo.entity.Flag;
+import com.example.demo.repository.FlagRepository;
 
 import jakarta.servlet.http.HttpSession;
+
 
 @Controller
 public class NationalFlagController {
@@ -33,8 +36,8 @@ public class NationalFlagController {
 		//ランダムにIDを決める
 		int id = new java.util.Random().nextInt(2);
 		//IDでDBから問題取り出し
-		Optional<Flag> flag = FlagService.findById(id);
-		
+		Flag flag = FlagRepository.findById(id);
+		//変数answerにデータベースからanswerを格納したい
 		answer = flag.getAnswer;
 		
 		mv.setViewName("game");
