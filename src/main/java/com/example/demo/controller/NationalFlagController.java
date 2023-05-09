@@ -14,6 +14,7 @@ public class NationalFlagController {
 	//変数session
 	@Autowired
 	HttpSession session;
+	Flag FlagRepository;
 	int count;
 	String comment;
 	int rightAns;
@@ -32,10 +33,9 @@ public class NationalFlagController {
 	public ModelAndView game(ModelAndView mv) {
 		//ランダムにIDを決める
 		int id = new java.util.Random().nextInt(2);
-		//IDでDBから問題取り出し
-		Optional<Flag> flag = FlagService.findById(id);
-		
-		answer = flag.getAnswer;
+		Flag flag = FlagRepository.findById(id);
+		//変数answerにデータベースからanswerを格納したい
+		answer = flag.getAnswer();
 		
 		mv.setViewName("game");
 		mv.addObject("flag", flag);
