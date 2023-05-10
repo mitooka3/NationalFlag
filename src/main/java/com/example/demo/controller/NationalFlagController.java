@@ -36,16 +36,10 @@ public class NationalFlagController {
 	public ModelAndView game(ModelAndView mv) {
 		//ランダムにIDを決める
 		int id = new java.util.Random().nextInt(2);
-<<<<<<< HEAD
-		Flag flag = FlagRepository.findById(id);
-		//変数answerにデータベースからanswerを格納したい
-		answer = flag.getAnswer();
-=======
 		//IDでDBから問題取り出し
 		Flag flag = FlagRepository.findById(id);
 		//変数answerにデータベースからanswerを格納したい
-		answer = flag.getAnswer;
->>>>>>> 18372b8adc32ee1795b4bdb3fc2c8bc4561d172f
+		answer = flag.getAnswer();
 		
 		mv.setViewName("game");
 		mv.addObject("flag", flag);
