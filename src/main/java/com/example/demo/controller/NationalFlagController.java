@@ -17,11 +17,12 @@ public class NationalFlagController {
 	//変数session
 	@Autowired
 	HttpSession session;
-	Flag FlagRepository;
+	FlagRepository flagRepository;
 	int count;
 	String comment;
 	int rightAns;
 	int answer;
+	
 	
 	
 	//初期表示・もう一度ボタン
@@ -36,8 +37,9 @@ public class NationalFlagController {
 	public ModelAndView game(ModelAndView mv) {
 		//ランダムにIDを決める
 		int id = new java.util.Random().nextInt(2);
+		id++;
 		//IDでDBから問題取り出し
-		Flag flag = FlagRepository.findById(id);
+		Flag flag = flagRepository.findById(id).get();
 		//変数answerにデータベースからanswerを格納したい
 		answer = flag.getAnswer();
 		

@@ -39,9 +39,7 @@ public class Flag {
 	@Column(name = "answer")
 	private Integer answer;
 
-	public Flag findById(int id2) {
-		// TODO 自動生成されたメソッド・スタブ
-		return null;
-	}
+	
+	
 
 }
