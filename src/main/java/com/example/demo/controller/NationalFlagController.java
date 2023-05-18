@@ -47,7 +47,7 @@ public class NationalFlagController {
 		if(histories.size() >= 2) {
 			System.out.println(histories.size());
 			mv.setViewName("end");
-			mv.addObject("histories;", histories);
+			mv.addObject("histories", histories);
 			return mv;
 		}else {
 			//ランダムにIDを決める
