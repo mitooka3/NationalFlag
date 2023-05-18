@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeaf.org">
+<head>
+<meta charset="UTF-8">
+<title>国旗当てゲーム</title>
+<style>
+th,td{
+	border : solid 1px;}
+title{
+	border-collepse:collapse;}
+</style>
+</head>
+<body>
+	<h1>★・・国旗当てゲーム・・★</h1>
+	<hr>
+		<h2><span th:text="${comment}"></span></h2>
+		
+		<p>
+			
+		</p>
+	
+
+	<form action="/game" method="get">
+	<p>
+		<input type="submit"  value="次の問題"></input>
+	</p>
+	</form>
+	
+</body>
+</html>

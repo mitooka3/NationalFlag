@@ -6,34 +6,28 @@
 </head>
 <body>
 	<h1>★・・国旗当てゲーム・・★</h1>
-	<form action="/answer" method="post">
-		<img src="${flag.image}">
+	<form action="/answer" method="post" th:object="${flag}">
+		<img th:src="@{'*{image}'}"></img>
 		
 		<p>
-			<button type="submit" name="number" value="${flag.choice1}"></button>
+			<button type='submit' name='number' value='1'><span th:text="*{choice1}"></span></button>
 		</p>
 		<p>
-			<button type="submit" name="number" value="${flag.choice2}"></button>
+			<button type='submit' name='number' value='2'><span th:text="*{choice2}"></span></button>
 		</p>
 		<p>
-			<button type="submit" name="number" onclick="location.href='/answer'" value="3">
-				<span th:text="${flag.choice3}"></span></button>
+			<button type='submit' name='number' value='3'><span th:text="*{choice3}"></span></button>
 		</p>
 		<p>
-			<button type="submit" name="number" href="/answer/4"
-			 th:text="${flag.choice4}"></button>
+			<button type='submit' name='number' value='4'><span th:text="*{choice4}"></span></button>
 		</p>
 		
 	</form>
+		
 	<hr>
 	
 	<p>
-		<h2 th:text="comment"></h2>
-		<h2><span th:text="${comment}"></span></h2>
-	</p>
-	
-	<p>
-		<a href="/game">☆・・次の問題・・☆</a>
+		<a href="/">★・はじめから・★</a>
 	</p>
 
 </body>

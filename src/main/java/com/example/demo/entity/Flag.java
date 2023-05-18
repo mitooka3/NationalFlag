@@ -1,5 +1,7 @@
 package com.example.demo.entity;
 
+import org.springframework.stereotype.Component;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -11,6 +13,7 @@ import lombok.Data;
 @Entity
 @Table(name = "flag")
 @Data
+@Component
 
 public class Flag {
 	@Id

@@ -1,30 +1,31 @@
 package com.example.demo.controller;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+//import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.example.demo.History;
 import com.example.demo.entity.Flag;
 import com.example.demo.repository.FlagRepository;
 
 import jakarta.servlet.http.HttpSession;
+import lombok.AllArgsConstructor;
 
 
 @Controller
+@AllArgsConstructor
 public class NationalFlagController {
-	//変数session
+	
 	@Autowired
 	HttpSession session;
 	FlagRepository flagRepository;
-	int count;
-	String comment;
-	int rightAns;
-	int answer;
-	
-	
-	
+	Flag flag;
 	//初期表示・もう一度ボタン
 	@GetMapping("/")
 	public String index() {
@@ -33,15 +34,15 @@ public class NationalFlagController {
 		return "opening";
 	}
 	
+	
 	@GetMapping("/game")
 	public ModelAndView game(ModelAndView mv) {
 		//ランダムにIDを決める
 		int id = new java.util.Random().nextInt(2);
 		id++;
 		//IDでDBから問題取り出し
-		Flag flag = flagRepository.findById(id).get();
-		//変数answerにデータベースからanswerを格納したい
-		answer = flag.getAnswer();
+		flag = flagRepository.findById(id).get();
+		session.setAttribute("flag", flag);
 		
 		mv.setViewName("game");
 		mv.addObject("flag", flag);
@@ -51,31 +52,39 @@ public class NationalFlagController {
 	
 	//回答後
 	
-	@GetMapping("/answer/{number}")
-	public ModelAndView answer(@PathVariable(name = "number")int number,ModelAndView mv) {
-		count = (Integer)session.getAttribute("count");
-		count++;
-		answer = (Integer)session.getAttribute("answer");
+	@PostMapping("/answer")
+	public ModelAndView answer(int number,ModelAndView mv) {
+		flag = (Flag)session.getAttribute("flag");
+		String comment;
+	
+		@SuppressWarnings("unchecked")
+		List<History> histories = (List<History>)session.getAttribute("histories");
+		if (histories == null) {
+			histories = new ArrayList<>();
+			session.setAttribute("histories", histories);
+		}
 			
-		if(count >= 10) {
+		if(histories.size() >= 2) {
+			System.out.println(histories.size());
 			mv.setViewName("end");
-			mv.addObject("rightAns",rightAns);
+			mv.addObject("histories;", histories);
 			return mv;
 		}else {
-			if(number == answer) {
+			if(number == flag.getAnswer()) {
+				histories.add(new History(histories.size() + 1,"正解",flag.getTitle()));
 				comment = "正解です！";
-				rightAns = (Integer)session.getAttribute("rightAns");
-				rightAns++;
-				session.setAttribute("rightAns", rightAns);
-				session.setAttribute("count", count);
-				
-				mv.setViewName("game");
+				session.setAttribute("comment", comment);
+				System.out.println(histories.size());
+				mv.setViewName("game3");
 				mv.addObject("comment", comment);
 				return mv;
 				
 			}else {
-				comment = "ざんねん！！不正解　　こたえは " + answer  + " でした";
-				mv.setViewName("game");
+				histories.add(new History(histories.size() + 1,"不正解",flag.getTitle()));
+				comment ="ざんねん！！不正解　　こたえは　" + flag.getTitle()  + "　の　" + flag.getAnswer() + "　でした";
+				session.setAttribute("comment", comment);
+				System.out.println(histories.size());
+				mv.setViewName("game3");
 				mv.addObject("comment", comment);
 				return mv;
 			}

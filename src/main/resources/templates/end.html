@@ -1,18 +1,37 @@
 <!DOCTYPE html>
-<html>
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
 <meta charset="UTF-8">
 <title>国旗当てゲーム</title>
+<style>
+th,td{
+	border : solid 1px;}
+table{
+	border-collapse:collapse;}
+</style>
 </head>
 <body>
 	<h1>★・・国旗当てゲーム・・★</h1>
-	<hr>
-	<h2>あなたの正解数は<span th:text="${rightAns}"></span></h2>
-	
-	
-	<p>
-		<a href="/">☆・・・はじめからあそぶ・・・☆</a>
-	</p>
 
+	<hr>
+	<table>
+	
+		<tr>
+			<th>回数</th>
+			<th>結果</th>
+		</tr>
+		<tr th:each="h:${histories}">
+			<td th:text="${h.seq}"></td>
+			<td th:text="${h.result}"></td>
+			
+		</tr>
+	</table>
+	<hr>
+	<hr>
+	<p>
+		<a href="/">・はじめから・</a>
+	</p>
+	</form>
+	
 </body>
 </html>
