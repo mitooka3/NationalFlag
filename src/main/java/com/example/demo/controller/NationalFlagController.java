@@ -37,16 +37,30 @@ public class NationalFlagController {
 	
 	@GetMapping("/game")
 	public ModelAndView game(ModelAndView mv) {
-		//ランダムにIDを決める
-		int id = new java.util.Random().nextInt(2);
-		id++;
-		//IDでDBから問題取り出し
-		flag = flagRepository.findById(id).get();
-		session.setAttribute("flag", flag);
+		@SuppressWarnings("unchecked")
+		List<History> histories = (List<History>)session.getAttribute("histories");
+		if (histories == null) {
+			histories = new ArrayList<>();
+			session.setAttribute("histories", histories);
+		}
 		
-		mv.setViewName("game");
-		mv.addObject("flag", flag);
-		return mv;
+		if(histories.size() >= 2) {
+			System.out.println(histories.size());
+			mv.setViewName("end");
+			mv.addObject("histories;", histories);
+			return mv;
+		}else {
+			//ランダムにIDを決める
+			int id = new java.util.Random().nextInt(2);
+			id++;
+			//IDでDBから問題取り出し
+			flag = flagRepository.findById(id).get();
+			session.setAttribute("flag", flag);
+			
+			mv.setViewName("game");
+			mv.addObject("flag", flag);
+			return mv;
+		}
 	}
 	
 	
@@ -59,35 +73,24 @@ public class NationalFlagController {
 	
 		@SuppressWarnings("unchecked")
 		List<History> histories = (List<History>)session.getAttribute("histories");
-		if (histories == null) {
-			histories = new ArrayList<>();
-			session.setAttribute("histories", histories);
-		}
 			
-		if(histories.size() >= 2) {
+		if(number == flag.getAnswer()) {
+			histories.add(new History(histories.size() + 1,"正解",flag.getTitle()));
+			comment = "正解です！";
+			session.setAttribute("comment", comment);
 			System.out.println(histories.size());
-			mv.setViewName("end");
-			mv.addObject("histories;", histories);
+			mv.setViewName("game3");
+			mv.addObject("comment", comment);
 			return mv;
+			
 		}else {
-			if(number == flag.getAnswer()) {
-				histories.add(new History(histories.size() + 1,"正解",flag.getTitle()));
-				comment = "正解です！";
-				session.setAttribute("comment", comment);
-				System.out.println(histories.size());
-				mv.setViewName("game3");
-				mv.addObject("comment", comment);
-				return mv;
-				
-			}else {
-				histories.add(new History(histories.size() + 1,"不正解",flag.getTitle()));
-				comment ="ざんねん！！不正解　　こたえは　" + flag.getTitle()  + "　の　" + flag.getAnswer() + "　でした";
-				session.setAttribute("comment", comment);
-				System.out.println(histories.size());
-				mv.setViewName("game3");
-				mv.addObject("comment", comment);
-				return mv;
-			}
+			histories.add(new History(histories.size() + 1,"不正解",flag.getTitle()));
+			comment ="ざんねん！！不正解　　こたえは　" + flag.getTitle()  + "　の　" + flag.getAnswer() + "　でした";
+			session.setAttribute("comment", comment);
+			System.out.println(histories.size());
+			mv.setViewName("game3");
+			mv.addObject("comment", comment);
+			return mv;
 		}
 	}
 }
