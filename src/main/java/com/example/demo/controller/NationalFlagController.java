@@ -46,13 +46,13 @@ public class NationalFlagController {
 		}
 		
 		if(histories.size() >= 2) {
-			System.out.println(histories.size());
+			//System.out.println(histories.size());
 			mv.setViewName("end");
 			mv.addObject("histories", histories);
 			return mv;
 		}else {
 			//ランダムにIDを決める
-			int id = new java.util.Random().nextInt(2);
+			int id = new java.util.Random().nextInt(23);
 			id++;
 			//IDでDBから問題取り出し
 			flag = flagRepository.findById(id).get();
