@@ -13,10 +13,12 @@
 	
 		<tr>
 			<th>回数</th>
+			<th>国名</th>
 			<th>結果</th>
 		</tr>
 		<tr th:each="h:${histories}">
 			<td th:text="${h.seq}"></td>
+			<td th:text="${h.country}"></td>
 			<td th:text="${h.result}"></td>
 			
 		</tr>

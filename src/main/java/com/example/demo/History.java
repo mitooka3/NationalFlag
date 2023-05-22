@@ -11,4 +11,5 @@ public class History {
 	private String result;
 	private String country;
 
+
 }

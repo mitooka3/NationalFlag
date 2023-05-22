@@ -46,7 +46,7 @@ public class NationalFlagController {
 		}
 		
 		if(histories.size() >= 2) {
-			//System.out.println(histories.size());
+			System.out.println(histories.size());
 			mv.setViewName("end");
 			mv.addObject("histories", histories);
 			return mv;
