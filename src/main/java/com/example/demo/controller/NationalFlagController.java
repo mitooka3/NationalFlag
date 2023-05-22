@@ -37,6 +37,7 @@ public class NationalFlagController {
 	
 	@GetMapping("/game")
 	public ModelAndView game(ModelAndView mv) {
+		flag = (Flag)session.getAttribute("flag");
 		@SuppressWarnings("unchecked")
 		List<History> histories = (List<History>)session.getAttribute("histories");
 		if (histories == null) {
@@ -45,9 +46,9 @@ public class NationalFlagController {
 		}
 		
 		if(histories.size() >= 2) {
-			System.out.println(histories.size());
+			//System.out.println(histories.size());
 			mv.setViewName("end");
-			mv.addObject("histories;", histories);
+			mv.addObject("flag", flag);
 			return mv;
 		}else {
 			//ランダムにIDを決める
